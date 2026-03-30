@@ -1,0 +1,157 @@
+<div class="task-manager-container">
+  <header class="task-header">
+    <h1>📋 Task Manager</h1>
+    <p class="subtitle">Manage your daily tasks efficiently with RxJS</p>
+  </header>
+
+  <main class="task-content">
+    <!-- Error Message Display -->
+    <div *ngIf="(error$ | async) as error" class="alert alert-danger">
+      <span>{{ error }}</span>
+      <button (click)="clearError()" class="btn-close">✕</button>
+    </div>
+
+    <!-- Task Form Section -->
+    <section class="task-form-section">
+      <h2>Add New Task</h2>
+      <form [formGroup]="taskForm" (ngSubmit)="onAddTask()" class="task-form">
+        <div class="form-group">
+          <label for="title">Task Title *</label>
+          <input
+            type="text"
+            id="title"
+            formControlName="title"
+            placeholder="Enter task title"
+            class="form-control"
+          />
+          <small *ngIf="taskForm.get('title')?.invalid && taskForm.get('title')?.touched"
+            class="error-message">
+            Title is required
+          </small>
+        </div>
+
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea
+            id="description"
+            formControlName="description"
+            placeholder="Enter task description"
+            class="form-control"
+            rows="3"
+          ></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="priority">Priority</label>
+            <select id="priority" formControlName="priority" class="form-control">
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="dueDate">Due Date</label>
+            <input
+              type="date"
+              id="dueDate"
+              formControlName="dueDate"
+              class="form-control"
+            />
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          [disabled]="!taskForm.valid || (loading$ | async)"
+          class="btn btn-primary btn-submit"
+        >
+          <span *ngIf="!(loading$ | async)">✓ Add Task</span>
+          <span *ngIf="loading$ | async">Adding...</span>
+        </button>
+      </form>
+    </section>
+
+    <!-- Tasks Display Section -->
+    <section class="tasks-section">
+      <div class="tasks-header">
+        <h2>Tasks ({{ (tasks$ | async)?.length || 0 }})</h2>
+        <div class="filter-controls">
+          <button
+            (click)="viewAll = true; viewCompleted = false"
+            [class.active]="viewAll"
+            class="filter-btn"
+          >
+            All
+          </button>
+          <button
+            (click)="viewCompleted = false; viewAll = false"
+            [class.active]="!viewAll && !viewCompleted"
+            class="filter-btn"
+          >
+            Pending
+          </button>
+          <button
+            (click)="viewCompleted = true; viewAll = false"
+            [class.active]="viewCompleted"
+            class="filter-btn"
+          >
+            Completed
+          </button>
+        </div>
+      </div>
+
+      <!-- Loading State -->
+      <div *ngIf="loading$ | async" class="loading">
+        <p>Loading tasks...</p>
+      </div>
+
+      <!-- Empty State -->
+      <div *ngIf="!(loading$ | async) && ((tasks$ | async)?.length === 0)" class="empty-state">
+        <p>No tasks yet. Create one to get started! 🚀</p>
+      </div>
+
+      <!-- Tasks List -->
+      <div *ngIf="!(loading$ | async)" class="tasks-list">
+        <div
+          *ngFor="let task of getFilteredTasks()"
+          [class]="'task-card ' + task.priority"
+        >
+          <div class="task-header-card">
+            <input
+              type="checkbox"
+              [checked]="task.completed"
+              (change)="onToggleTask(task)"
+              class="task-checkbox"
+            />
+            <h3 [class.completed]="task.completed">{{ task.title }}</h3>
+            <span class="priority-badge" [ngClass]="task.priority">
+              {{ task.priority }}
+            </span>
+          </div>
+
+          <p *ngIf="task.description" class="task-description">
+            {{ task.description }}
+          </p>
+
+          <div class="task-footer">
+            <small *ngIf="task.dueDate" class="task-date">
+              📅 Due: {{ task.dueDate | date: 'MMM dd, yyyy' }}
+            </small>
+            <small class="task-created">Created: {{ task.createdAt | date: 'short' }}</small>
+          </div>
+
+          <div class="task-actions">
+            <button
+              (click)="onDeleteTask(task.id)"
+              class="btn btn-danger btn-sm"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
