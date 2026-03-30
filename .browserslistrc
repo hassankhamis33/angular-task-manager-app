@@ -1,0 +1,9 @@
+# This file is used by the build system to adjust CSS and JavaScript output to support the specified browsers below.
+# For learning more about the .browserslistrc format, see https://github.com/browserslist/browserslist#queries
+
+last 2 Chrome versions
+last 1 Firefox version
+last 2 Edge major versions
+last 2 Safari major versions
+last 2 iOS major versions
+Firefox ESR

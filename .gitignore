@@ -1,0 +1,30 @@
+# Angular
+/node_modules
+/dist
+/out-tsc
+/.angular
+*.tsbuildinfo
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+*.sublime-project
+*.sublime-workspace
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Misc
+npm-debug.log
+yarn-error.log
+coverage/
