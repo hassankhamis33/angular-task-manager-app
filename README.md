@@ -26,7 +26,11 @@ A production-ready Angular application demonstrating clean architecture, RxJS pa
 ✅ Docker containerization  
 ✅ Production-ready build process  
 
-## 📁 Folder Structure
+## � Screenshots
+
+![Application Screenshot](screenshot.png)
+
+## �📁 Folder Structure
 
 ```
 angular-task-manager/
