@@ -1,0 +1,60 @@
+# Node/npm
+node_modules
+npm-debug.log
+yarn-error.log
+.npm
+package-lock.json
+yarn.lock
+
+# Build artifacts
+dist
+.angular
+
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Testing
+coverage
+.nyc_output
+karma.conf.js
+*.spec.ts
+
+# CI/CD
+.github
+.gitlab-ci.yml
+.travis.yml
+
+# Docker
+Dockerfile
+Dockerfile.dev
+docker-compose.yml
+docker-compose.dev.yml
+.dockerignore
+
+# Documentation
+README.md
+DOCKER.md
+docs/
+
+# Misc
+.editorconfig
+.prettierignore
+.angular.json

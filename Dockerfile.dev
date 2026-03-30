@@ -1,0 +1,28 @@
+# Development Dockerfile for Angular Application
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Install additional development tools
+RUN apk add --no-cache \
+    git \
+    bash \
+    curl \
+    wget
+
+# Copy package files
+COPY package*.json ./
+
+# Install dependencies (including dev dependencies)
+RUN npm install
+
+# Copy application source
+COPY . .
+
+# Expose ports
+# 4200: Angular dev server
+# 9876: Karma test runner
+EXPOSE 4200 9876
+
+# Default command (can be overridden by docker-compose)
+CMD ["npm", "start"]
